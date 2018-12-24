@@ -1,0 +1,126 @@
+
+ 
+ <div class="row">
+    <div class="main col-md-12">
+        <h2>Mirza Celik - "the developer"</h2>
+        
+            <article>
+                <h4>Hi There,</h4>
+                <p class = "about">My name is Mirza Celik, and I am studying computer programming at Seneca. I am in my third Semester and I am really enjoying
+				this program. I am doing well and I am excited to see what this semester holds in store. When I finish I want to find
+				a job right away and follow my passion.I would ideally like to work with games!</p>
+                <p>Enjoy browsing my app!</p>
+                <p>Mirza Celik</p>
+            </article>
+        <h3>Leave a Comment</h3>
+            <div class="well">
+                <div class="row">
+                    <div class="col-md-12">
+                        <form method="post" action="/about/addComment">
+                            <div class="well">
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <input type="text" class="form-control" placeholder="Name" name="authorName" />
+                                        <br />
+                                    </div>
+                                    <div class="col-md-6">
+                                        <input type="email" class="form-control" placeholder="Email" name="authorEmail" />
+                                        <br />
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <input type="text" class="form-control" placeholder="Subject" name="subject" />
+                                        <br />
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <textarea class="form-control" rows="8" placeholder="Comment" name="commentText"></textarea>
+                                        <br />
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-2 col-md-offset-10">
+                                    <button type="submit" class="btn btn-primary form-control">Comment</button>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+        {{#if data}}
+        <div class="row">
+            <div class="col-md-12">
+                <h3>All Comments</h3>
+                <hr />
+            </div>
+        </div>
+        {{/if}}
+        {{#each data}}
+        <strong>{{subject}}</strong>
+        <div class="row">
+            <div class="col-md-12">
+                <div class="well">
+                    <div class="row">
+                        <div class="col-md-12">
+                            {{commentText}}<br /><br />
+                             Posted on: {{postedDate}} by <a href="mailto:{{authorEmail}}">{{authorName}}</a><br /><br />
+                        </div>
+                    </div>
+                    {{#each this}}   {{!-- Two dimensional array in JSON Schema --}}
+                    {{#each replies}}
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="well">{{commentText}}<br /><br />
+                             Posted on: {{repliedDate}} by <a href="mailto:{{authorEmail}}">{{authorName}}</a><br /><br /></div>
+                        </div>
+                    </div>
+                    {{/each}}
+                    {{/each}}
+                    <div class="row">
+                        <div class="col-md-12">
+                            <button class="btn btn-primary btn-sm pull-right" data-toggle="collapse" data-target="#reply-{{_id}}" aria-expanded="false">Reply</button>
+                        </div>
+                    </div>
+                </div>
+                <div class="collapse" id="reply-{{_id}}">
+                <div class="well">
+                    <div class="row">
+                        <div class="col-md-12">
+                            {{!-- REPLY FORM --}}
+                            <form method="post" action="/about/addReply"><div class="row">
+                                <div class="col-md-6">
+                                    <input class="form-control" placeholder="Name" name="authorName" type="text">
+                                    <br>
+                                </div>
+                                <div class="col-md-6">
+                                    <input class="form-control" placeholder="Email" name="authorEmail" type="email">
+                                    <br>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <textarea class="form-control" rows="8" placeholder="Comment" name="commentText"></textarea>
+                                    <br>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-2 col-md-offset-10">
+                                    <input value="{{_id}}" name="_id" type="hidden">
+                                    <input value="{{_id}}" name="comment_id" type="hidden">
+                                    <button type="submit" class="btn btn-primary form-control">Submit Reply</button>
+                                </div>
+                            </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    {{/each}}
+    </div>
+</div>
+
